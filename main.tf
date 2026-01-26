@@ -9,3 +9,7 @@ data "tfe_project" "main" {
 data "tfe_workspace" "main" {
   name = var.workspace_name
 }
+
+data "tfe_github_app_installation" "main" {
+  name = data.tfe_organization.main.name
+}
