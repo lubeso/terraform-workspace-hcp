@@ -13,3 +13,7 @@ data "tfe_workspace" "main" {
 data "tfe_github_app_installation" "main" {
   name = data.tfe_organization.main.name
 }
+
+data "github_user" "main" {
+  username = ""
+}
