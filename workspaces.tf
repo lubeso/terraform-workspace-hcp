@@ -1,19 +1,27 @@
-resource "tfe_workspace" "cloudflare" {
-  name       = "cloudflare"
+locals {
+  workspaces = {
+    "cloudflare" = {}
+  }
+}
+
+resource "tfe_workspace" "all" {
+  for_each   = local.workspaces
+  name       = each.key
   project_id = data.tfe_project.main.id
   vcs_repo {
-    identifier                 = "${data.github_user.main.username}/${github_repository.cloudflare.name}"
+    identifier                 = "${data.github_user.main.username}/${github_repository.all[each.key].name}"
     github_app_installation_id = data.tfe_github_app_installation.main.id
   }
-  depends_on = [github_repository_ruleset.cloudflare]
 }
 
-resource "tfe_workspace_settings" "cloudflare" {
-  workspace_id = tfe_workspace.cloudflare.id
+resource "tfe_workspace_settings" "all" {
+  for_each     = local.workspaces
+  workspace_id = tfe_workspace.all[each.key].id
 }
 
-resource "github_repository" "cloudflare" {
-  name                = "terraform-workspace-cloudflare"
+resource "github_repository" "all" {
+  for_each            = local.workspaces
+  name                = "terraform-workspace-${each.key}"
   allow_merge_commit  = false
   allow_squash_merge  = false
   allow_update_branch = true
@@ -23,9 +31,10 @@ resource "github_repository" "cloudflare" {
   has_wiki            = false
 }
 
-resource "github_repository_ruleset" "cloudflare" {
+resource "github_repository_ruleset" "all" {
+  for_each    = local.workspaces
   name        = "default"
-  repository  = github_repository.cloudflare.name
+  repository  = github_repository.all[each.key].name
   target      = "branch"
   enforcement = "active"
   bypass_actors {
