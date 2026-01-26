@@ -15,5 +15,5 @@ data "tfe_github_app_installation" "main" {
 }
 
 data "github_user" "main" {
-  username = ""
+  username = data.tfe_organization.main.name
 }
