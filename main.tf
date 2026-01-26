@@ -11,7 +11,7 @@ data "tfe_workspace" "main" {
 }
 
 data "tfe_github_app_installation" "main" {
-  name = data.tfe_organization.main.name
+  installation_id = var.github_app_installation_id
 }
 
 data "github_user" "main" {
