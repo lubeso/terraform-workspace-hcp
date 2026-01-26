@@ -3,7 +3,7 @@ resource "tfe_workspace" "cloudflare" {
   project_id = data.tfe_project.main.id
   vcs_repo {
     identifier                 = "${data.github_user.main.username}/${github_repository.cloudflare.name}"
-    github_app_installation_id = data.tfe_github_app_installation.main.installation_id
+    github_app_installation_id = data.tfe_github_app_installation.main.id
   }
   depends_on = [github_repository_ruleset.cloudflare]
 }
