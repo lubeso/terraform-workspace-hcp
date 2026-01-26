@@ -9,7 +9,7 @@ resource "tfe_workspace" "all" {
   name       = each.key
   project_id = data.tfe_project.main.id
   vcs_repo {
-    identifier                 = "${data.github_user.main.username}/${github_repository.all[each.key].name}"
+    identifier                 = "${data.github_user.main.username}/${github_repository.workspaces[each.key].name}"
     github_app_installation_id = data.tfe_github_app_installation.main.id
   }
 }
@@ -19,7 +19,7 @@ resource "tfe_workspace_settings" "all" {
   workspace_id = tfe_workspace.all[each.key].id
 }
 
-resource "github_repository" "all" {
+resource "github_repository" "workspaces" {
   for_each            = local.workspaces
   name                = "terraform-workspace-${each.key}"
   allow_merge_commit  = false
@@ -31,10 +31,10 @@ resource "github_repository" "all" {
   has_wiki            = false
 }
 
-resource "github_repository_ruleset" "all" {
+resource "github_repository_ruleset" "workspaces" {
   for_each    = local.workspaces
   name        = "default"
-  repository  = github_repository.all[each.key].name
+  repository  = github_repository.workspaces[each.key].name
   target      = "branch"
   enforcement = "active"
   bypass_actors {
