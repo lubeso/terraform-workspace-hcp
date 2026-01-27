@@ -1,5 +1,5 @@
 resource "github_repository" "main" {
-  name                = name
+  name                = var.name
   allow_merge_commit  = false
   allow_squash_merge  = false
   allow_update_branch = true
