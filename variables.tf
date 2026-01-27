@@ -9,3 +9,7 @@ variable "workspace_name" {
 variable "github_app_installation_id" {
   type = number
 }
+
+variable "workspace_names" {
+  type = list(string)
+}
