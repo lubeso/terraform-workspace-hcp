@@ -11,6 +11,7 @@ resource "github_repository" "main" {
 }
 
 resource "github_repository_ruleset" "default_branch" {
+  depends_on  = [github_repository_file.static]
   name        = "default-branch"
   repository  = github_repository.main.name
   target      = "branch"

@@ -4,6 +4,7 @@ module "vcs_repo" {
 }
 
 resource "tfe_workspace" "main" {
+  depends_on = [module.vcs_repo]
   name       = var.name
   project_id = var.project_id
   vcs_repo {
