@@ -7,7 +7,7 @@ variable "project_id" {
 }
 
 variable "vcs_repo_github_app_installation_id" {
-  type = number
+  type = string
 }
 
 variable "vcs_repo_ingress_submodules" {
