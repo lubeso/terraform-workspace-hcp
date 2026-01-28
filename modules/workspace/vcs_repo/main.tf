@@ -10,9 +10,14 @@ resource "github_repository" "main" {
   has_wiki            = false
 }
 
-resource "github_repository_ruleset" "default_branch" {
+data "github_branch" "main" {
+  repository = github_repository.main.name
+  branch     = "main"
+}
+
+resource "github_repository_ruleset" "main" {
   depends_on  = [github_repository_file.static]
-  name        = "default-branch"
+  name        = "main"
   repository  = github_repository.main.name
   target      = "branch"
   enforcement = "active"
