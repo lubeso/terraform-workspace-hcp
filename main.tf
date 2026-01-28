@@ -16,7 +16,7 @@ data "tfe_github_app_installation" "main" {
 
 module "workspaces" {
   for_each = {
-    for workspace_name in var.var.workspace_names
+    for workspace_name in var.workspace_names
     : workspace_name => true
   }
   source                              = "./modules/workspace"
