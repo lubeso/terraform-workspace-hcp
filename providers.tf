@@ -2,15 +2,15 @@ terraform {
   required_providers {
     github = {
       source  = "integrations/github"
-      version = "~> 6.10.2"
+      version = "~> 6.11.1"
     }
     local = {
       source  = "hashicorp/local"
-      version = "~> 2.6.1"
+      version = "~> 2.7.0"
     }
     tfe = {
       source  = "hashicorp/tfe"
-      version = "~> 0.73.0"
+      version = "~> 0.74.0"
     }
   }
 }
