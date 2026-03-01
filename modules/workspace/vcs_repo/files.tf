@@ -1,17 +1,9 @@
-locals {
-  static_filenames = toset([
-    ".editorconfig",
-    ".gitignore",
-    "LICENSE",
-  ])
-}
-
 data "local_file" "static" {
   for_each = {
-    for filename in local.static_filenames
+    for filename in fileset("${path.module}/static", "**")
     : filename => true
   }
-  filename = "${path.module}/static/${each.key}"
+  filename = each.key
 }
 
 resource "github_repository_file" "static" {
